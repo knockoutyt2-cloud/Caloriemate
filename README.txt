@@ -7,7 +7,10 @@ IMPORTANT: This is not activated by a static Netlify Drop upload alone. The Netl
 Deployment:
 1. Upload the project to a GitHub repository (include index.html, manifest, sw.js, icons, netlify.toml and netlify/functions/analyze-food.mjs).
 2. In Netlify, import/connect that GitHub repository as a site. Build command can be blank; publish directory is ".".
-3. Netlify site dashboard: Site configuration / Environment variables (or Build & deploy > Environment) -> add OPENAI_API_KEY with your API key. Optional OPENAI_MODEL can override the default model.
+3. Choose how the AI is billed (the function reads credentials only from server-side Netlify environment variables via the official OpenAI SDK):
+   a) Netlify AI Gateway (no key needed): do NOT set OPENAI_API_KEY. Netlify injects OPENAI_API_KEY and OPENAI_BASE_URL automatically at runtime and usage is billed to Netlify credits.
+   b) Your own OpenAI account: set OPENAI_API_KEY (marked secret) in the Netlify environment variables. Requests then go directly to OpenAI and are billed by OpenAI; the account must have API credits.
+   Optional OPENAI_MODEL can override the default model (gpt-6.2-astra).
 4. Trigger a new deploy.
 5. Open the deployed site and Food Log -> choose a photo -> Analyze Photo with AI -> review -> Add meal to Food Log.
 
